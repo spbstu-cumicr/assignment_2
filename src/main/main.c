@@ -24,7 +24,7 @@ static const uint8_t ledColour[] = {
 };
 
 // Длительность горения светодиодов
-const uint32_t period_ms = 50;
+const uint32_t period_ms = 200;
 
 // Фамилия
 const char *lastName = "Pankov";
