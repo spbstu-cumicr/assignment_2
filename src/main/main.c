@@ -1,39 +1,24 @@
 #include "mcu_support_package/inc/stm32f4xx.h"
 #include "led.h"
 #include "timer.h"
-#include "main/Lab2_Test.h"
+#include "variants.h"
+#include "lab_2_test.h"
 
 #include <stdint.h>
 
 // Последовательность загорания светодиодов
-// Укажите последовательность в соответствии с вариантом
-// Используйте макроопределения цветом светодиодов:
-// LED_GREEN — зелёный
-// LED_YELLOW — жёлтый
-// LED_RED — красный
-// LED_BLUE — синий
-static const uint8_t ledColour[] = {
-	LED_BLUE,
-	LED_GREEN,
-	LED_BLUE,
-	LED_YELLOW,
-	LED_RED,
-	LED_YELLOW,
-	LED_BLUE,
-	LED_GREEN
-};
+static const uint8_t *ledColour;
 
 // Длительность горения светодиодов
-const uint32_t period_ms = 200;
+const uint32_t period_ms = 100;
 
 // Фамилия
-const char *lastName = "Pankov";
+const char *lastName = "Yakimenko";
 
 int main(void)
 {
 	// Вариант задания
-	static uint8_t variant = 0;	
-	variant = Lab2_Test_ini((char *)lastName);	
+	static uint8_t variant = 0;		
 
 	// Контрольная сумма
 	static uint32_t checksum = 0;
@@ -44,6 +29,13 @@ int main(void)
 	
 	// Инициализируем таймер
 	initTimer(period_ms);
+    
+    // Инициализируем тестовую прошивку
+    variant = initTest(lastName);
+    variant = 19;
+    
+    // Определяем последовательность загорания светодиодов
+    ledColour = getLedColourList(variant);
 	
 	while(1)
 	{
@@ -63,13 +55,13 @@ int main(void)
 			
 			// Переходим к следующему светодиоду
 			ledNumber++;
-			ledNumber %= ARRAY_SIZE(ledColour);
+			ledNumber %= ledColourSize();
 			
 			// Сбрасываем флаг таймера
 			TIM_ClearFlag(TIM3, TIM_FLAG_Update);
 			
 			// Считаем контрольную сумму
-			checksum = read_flag();
+			checksum = getChecksum();
 		}
 	}
 	

@@ -7,3 +7,6 @@
 /dummy.uvgui.*
 /EventRecorderStub.scvd
 /Debug/
+/DebugConfig
+/lst
+/obj

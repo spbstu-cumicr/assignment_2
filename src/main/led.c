@@ -2,40 +2,41 @@
 
 static Led led[] = {
 	{
+		.turnOn     = turnOnLed,
+		.turnOff    = turnOffLed,
 		.periphPort = RCC_AHB1Periph_GPIOD,
 		.gpioPort   = GPIOD,
 		.gpioPin    = GPIO_Pin_12,
-		.gpioPinSrc = GPIO_PinSource12,
-		.turnOn     = turnOnLed,
-		.turnOff    = turnOffLed
+		.gpioPinSrc = GPIO_PinSource12
 	},
 	
 	{
+        .turnOn     = turnOnLed,
+		.turnOff    = turnOffLed,
 		.periphPort = RCC_AHB1Periph_GPIOD,
 		.gpioPort   = GPIOD,
 		.gpioPin    = GPIO_Pin_13,
-		.gpioPinSrc = GPIO_PinSource13,
-		.turnOn     = turnOnLed,
-		.turnOff    = turnOffLed
+		.gpioPinSrc = GPIO_PinSource13
 	},
 	
 	{
+		.turnOn     = turnOnLed,
+		.turnOff    = turnOffLed,
 		.periphPort = RCC_AHB1Periph_GPIOD,
 		.gpioPort   = GPIOD,
 		.gpioPin    = GPIO_Pin_14,
-		.gpioPinSrc = GPIO_PinSource14,
-		.turnOn     = turnOnLed,
-		.turnOff    = turnOffLed
+		.gpioPinSrc = GPIO_PinSource14
+
 	},
 	
 	{
+		.turnOn     = turnOnLed,
+		.turnOff    = turnOffLed,
 		.periphPort = RCC_AHB1Periph_GPIOD,
 		.gpioPort   = GPIOD,
 		.gpioPin    = GPIO_Pin_15,
 		.gpioPinSrc = GPIO_PinSource15,
-		.turnOn     = turnOnLed,
-		.turnOff    = turnOffLed
-	},
+	}
 };
 
 Led *initLed(void)
@@ -45,16 +46,16 @@ Led *initLed(void)
 		// Подаём питание на порт ввода-вывода общего назначения GPIOD
 		RCC_AHB1PeriphClockCmd(led[ledNumber].periphPort, ENABLE);
 		
-		// Устанавливаем пин PC.8 в режим вывода c двухтактным каскадом с частотой 50 МГц
-		GPIO_InitTypeDef new_led;
-		GPIO_StructInit(&new_led);
+		// Устанавливаем светодиода в режим вывода c двухтактным каскадом с частотой 50 МГц
+		GPIO_InitTypeDef newLed;
+		GPIO_StructInit(&newLed);
 
-		new_led.GPIO_Pin   = led[ledNumber].gpioPin;
-		new_led.GPIO_Mode  = GPIO_Mode_OUT;
-		new_led.GPIO_Speed = GPIO_Low_Speed;
-		new_led.GPIO_OType = GPIO_OType_PP;
+		newLed.GPIO_Pin   = led[ledNumber].gpioPin;
+		newLed.GPIO_Mode  = GPIO_Mode_OUT;
+		newLed.GPIO_Speed = GPIO_Low_Speed;
+		newLed.GPIO_OType = GPIO_OType_PP;
 		
-		GPIO_Init(led[ledNumber].gpioPort, &new_led);
+		GPIO_Init(led[ledNumber].gpioPort, &newLed);
 	}
 	
 	return led;
