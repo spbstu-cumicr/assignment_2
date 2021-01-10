@@ -46,7 +46,7 @@ const uint8_t *getLedColourList(const uint8_t variant)
     return ledColour[variant];
 }
 
-uint8_t ledColourSize()
+uint8_t ledColourSize(void)
 {
     return 8;
 }

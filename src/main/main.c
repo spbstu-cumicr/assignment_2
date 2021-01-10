@@ -13,7 +13,7 @@ static const uint8_t *ledColour;
 const uint32_t period_ms = 100;
 
 // Фамилия
-const char *lastName = "Yakimenko";
+const char *lastName = "Pankov";
 
 int main(void)
 {
@@ -32,7 +32,6 @@ int main(void)
     
     // Инициализируем тестовую прошивку
     variant = initTest(lastName);
-    variant = 19;
     
     // Определяем последовательность загорания светодиодов
     ledColour = getLedColourList(variant);
